@@ -17,10 +17,10 @@ unidecode
 filetype
 attrify
 uvloop
-geopy
 pySmartDL
 html2text
 removebg
+geopy
 aiofiles==24.1.0
 aiohttp==3.9.5
 aiosignal==1.3.1
@@ -40,9 +40,8 @@ opencv-python-headless==4.10.0.82
 pyromod==1.5
 pykeyboard
 httpx[http2]==0.27.2
-git clone https://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@github.com/paisalyudi/ubot
+git+https://github.com/akbarbotz3/lahk
 openai
 pydub
 search_engine_parser
 qrcode
-
