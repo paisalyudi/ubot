@@ -105,26 +105,40 @@ async def _(client, message):
         dc_id = f"{user.dc_id}" if user.dc_id else "-"
         common = await client.get_common_chats(user.id)
         out_str = f"""
-{brhsl}user information:
+<blockquote><b>{brhsl} user information:</blockquote></b>
 
-<emoji id=6030656587830399914>🆔</emoji>user id: {user.id}
-<emoji id=5805468025117217088>👤</emoji>first name: {first_name}
-<emoji id=5316843593149727917>🗣️</emoji>last name: {last_name}
-<emoji id=5895735846698487922>🌐</emoji>username: {username}
-<emoji id=6025976946083500432>🏛️</emoji>dc id: {dc_id}
-<emoji id=5927026418616636353>🤖</emoji>is bot: {user.is_bot}
-<emoji id=6025976301838405549>🚷</emoji>is scam: {user.is_scam}
-<emoji id=6003779240837780921>🚫</emoji>restricted: {user.is_restricted}
-<emoji id=6026257381678124710>✅</emoji>verified: {user.is_verified}
-<emoji id=6023898164732366954>⭐</emoji>premium: {user.is_premium}
-<emoji id=5974045315391556490>📝</emoji>user bio: {bio}
+<blockquote><b><emoji id=6030656587830399914>🆔</emoji> user id: {user.id}
+<emoji id=5260399854500191689>😀</emoji> first name: {first_name}
+<emoji id=5257969839313526622>📂</emoji> last name: {last_name}
+<emoji id=5258331647358540449>✍️</emoji> username: {username}
+<emoji id=5260268501515377807>📣</emoji> dc id: {dc_id}
+<emoji id=5258093637450866522>😀</emoji> is bot: {user.is_bot}
+<emoji id=5219805369806629055>😀</emoji> is scam: {user.is_scam}
+<emoji id=6003779240837780921>🚫</emoji> restricted: {user.is_restricted}
+<emoji id=5260341314095947411>👀</emoji> verified: {user.is_verified}
+<emoji id=5258185631355378853>⭐️</emoji> premium: {user.is_premium}
+<emoji id=5292226786229236118>🔄</emoji> user bio: {bio}</blockquote></b>
 
-<emoji id=6026016597221577211>👀</emoji>same groups seen: {len(common)}
-<emoji id=6026233591854272586>👁</emoji>last seen: {status}
-<emoji id=6032967748387082401>🔗</emoji>user permanent link: <a href=tg://user?id={user.id}>{fullname}</a>
+<blockquote><b><emoji id=5220070652756635426>😀</emoji> same groups seen: {len(common)}
+<emoji id=5253959125838090076>😀</emoji> last seen: {status}
+<emoji id=4942990428317156193>😅</emoji> ᴜsᴇʀʙᴏᴛ: <a href=tg://user?id={user.id}>{fullname}</a></blockquote></b>
 """
         
-        await Tm.edit(out_str, disable_web_page_preview=True)
+        photo_id = user.photo.big_file_id if user.photo else None
+        if photo_id:
+            photo = await client.download_media(photo_id)
+            await gather(
+                Tm.delete(),
+                client.send_photo(
+                    message.chat.id,
+                    photo,
+                    caption=out_str,
+                    reply_to_message_id=message.id,
+                ),
+            )
+            remove(photo)
+        else:
+            await Tm.edit(out_str, disable_web_page_preview=True)
     except Exception as e:
         return await Tm.edit(f"info: {e}")
 
@@ -175,7 +189,21 @@ async def _(client, message):
 📝 description: {description}
 """
         
-        await Tm.edit(out_str, disable_web_page_preview=True)
+        photo_id = chat.photo.big_file_id if chat.photo else None
+        if photo_id:
+            photo = await client.download_media(photo_id)
+            await gather(
+                Tm.delete(),
+                client.send_photo(
+                    message.chat.id,
+                    photo,
+                    caption=out_str,
+                    reply_to_message_id=message.id,
+                ),
+            )
+            remove(photo)
+        else:
+            await Tm.edit(out_str, disable_web_page_preview=True)
     except Exception as e:
         return await Tm.edit(f"info: `{e}`")
 
@@ -183,21 +211,21 @@ async def _(client, message):
 @PY.UBOT("id")
 @PY.TOP_CMD
 async def _(client, message):
-    text = f"<emoji id=6026218958900695642>💎</emoji> ᴍᴇꜱꜱᴀɢᴇ ɪᴅ: `{message.id}`\n"
+    text = f"<blockquote><b><emoji id=6026218958900695642>💎</emoji> ᴍᴇꜱꜱᴀɢᴇ ɪᴅ: `{message.id}`\n</blockquote></b>"
 
     if message.chat.type == ChatType.CHANNEL:
-        text += f"<emoji id=6026056450223116307>⏺</emoji> ᴄʜᴀᴛ ɪᴅ: `{message.sender_chat.id}`\n"
+        text += f"<blockquote><b><emoji id=6026056450223116307>⏺</emoji> ᴄʜᴀᴛ ɪᴅ: `{message.sender_chat.id}`\n</blockquote></b>"
     else:
-        text += f"<emoji id=6026292029179301727>👑</emoji> ʏᴏᴜʀ ɪᴅ: `{message.from_user.id}`\n\n"
+        text += f"<blockquote><b><emoji id=6026292029179301727>👑</emoji> ʏᴏᴜʀ ɪᴅ: `{message.from_user.id}`\n</blockquote></b>"
 
         if len(message.command) > 1:
             try:
                 user = await client.get_chat(message.text.split()[1])
-                text += f"<emoji id=6026056450223116307>⏺</emoji> ᴜꜱᴇʀ ɪᴅ: `{user.id}`\n\n"
+                text += f"<blockquote><b><emoji id=6026056450223116307>⏺</emoji> ᴜꜱᴇʀ ɪᴅ: `{user.id}`\n</blockquote></b>\n"
             except:
                 return await message.reply("<emoji id=6113891550788324241>❌</emoji>ᴘᴇɴɢɢᴜɴᴀ ᴛɪᴅᴀᴋ ᴅɪᴛᴇᴍᴜᴋᴀɴ")
 
-        text += f"<emoji id=6026056450223116307>⏺</emoji> ᴄʜᴀᴛ ɪᴅ: `{message.chat.id}`\n\n"
+        text += f"<blockquote><b><emoji id=6026056450223116307>⏺</emoji> ᴄʜᴀᴛ ɪᴅ: `{message.chat.id}`\n</blockquote></b>"
 
     if message.reply_to_message:
         id_ = (
@@ -209,8 +237,8 @@ async def _(client, message):
         if file_info:
             text += f"media id: {file_info.file_id}\n\n"
         text += (
-            f"<emoji id=6026257381678124710>✅</emoji> ʀᴇᴘʟɪᴇᴅ ᴍᴇꜱꜱᴀɢᴇ ɪᴅ: `{message.reply_to_message.id}`\n"
-            f"<emoji id=6026257381678124710>✅</emoji> ʀᴇᴘʟɪᴇᴅ ᴜꜱᴇʀ ɪᴅ: `{id_}`"
+            f"<blockquote><b><emoji id=6026257381678124710>✅</emoji> ʀᴇᴘʟɪᴇᴅ ᴍᴇꜱꜱᴀɢᴇ ɪᴅ: `{message.reply_to_message.id}` </blockquote></b>\n"
+            f"<blockquote><b><emoji id=6026257381678124710>✅</emoji> ʀᴇᴘʟɪᴇᴅ ᴜꜱᴇʀ ɪᴅ: `{id_}` </blockquote></b>"
         )
 
     return await message.reply(text, disable_web_page_preview=True)

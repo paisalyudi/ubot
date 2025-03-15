@@ -76,15 +76,15 @@ async def _(client, message):
             except Exception as error:
                 return await Tm.edit(error)
     await Tm.edit("proceꜱꜱing...")
-    await client.unblock_user("@qq_neural_anime_bot")
-    send_photo = await client.send_photo("@qq_neural_anime_bot", get_photo)
+    await client.unblock_user("@Image_To_AnimeBot")
+    send_photo = await client.send_photo("@Image_To_AnimeBot", get_photo)
     await asyncio.sleep(30)
     await send_photo.delete()
     await Tm.delete()
-    info = await client.resolve_peer("@qq_neural_anime_bot")
+    info = await client.resolve_peer("@Image_To_AnimeBot")
     anime_photo = []
     async for anime in client.search_messages(
-        "@qq_neural_anime_bot", filter=MessagesFilter.PHOTO
+        "@Image_To_AnimeBot", filter=MessagesFilter.PHOTO
     ):
         anime_photo.append(
             InputMediaPhoto(

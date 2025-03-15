@@ -7,19 +7,18 @@ import pytz
 hadir_list = []
 
 def get_hadir_list():
-    return "\n".join([f"👤 {user['mention']} - {user['jam']}" for user in hadir_list])
+    return "\n".join([f"<blockquote><b>👤 {user['mention']} - {user['jam']}</blockquote></b>" for user in hadir_list])
 
-__MODULE__ = "ᴀʙꜱᴇɴ"
+__MODULE__ = "ᴀʟ ǫᴜʀ'ᴀɴ"
 __HELP__ = """
-<blockquote><b>Bantuan Untuk Absen
+<blockquote><b>Bantuan Untuk Al Qur'an
 
-perintah : <code>{0}absen</code>
-    untuk membuat liꜱt abꜱen kamu
+perintah : <code>{0}alquran 1 2</code>
+    Untuk Mencari Ayat Al Qur'an
 
-perintah : <code>{0}delabsen</code>
-    untuk menghapuꜱ liꜱt abꜱen kamu</b></blockquote>
+Contoh: <code>{0}alquran 1 2</code>
+Maka hasilnya Surah Al-Fatihah Ayat 2</blockquote></b>
 """
-
 
 @PY.UBOT("absen")
 @PY.TOP_CMD

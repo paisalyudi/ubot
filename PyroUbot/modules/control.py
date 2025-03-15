@@ -34,7 +34,7 @@ query:
 async def _(client, message):
     if len(message.command) < 3:
         return await message.reply(
-            f"{message.text} [group/channel] [name/title]")
+            f"{message.text} [group/channel] [name/titlee]")
     group_type = message.command[1]
     split = message.command[2:]
     group_name = " ".join(split)
@@ -68,7 +68,7 @@ async def _(client, message):
     else:
         ub_prefix = []
         for prefix in message.command[1:]:
-            if prefix.lower() == "none":
+            if prefix.lower() == "threnone":
                 ub_prefix.append("")
             else:
                 ub_prefix.append(prefix)
@@ -76,7 +76,7 @@ async def _(client, message):
             client.set_prefix(message.from_user.id, ub_prefix)
             await set_pref(message.from_user.id, ub_prefix)
             parsed_prefix = " ".join(f"{prefix}" for prefix in ub_prefix)
-            return await Tm.edit(f"{brhsl}prefix telah diubah ke: {parsed_prefix}")
+            return await Tm.edit(f"<blockquote><b>{brhsl}prefix telah diubah ke: {parsed_prefix}</blockquote></b>\n\n<blockquote><b>ᴀᴡᴀs ᴋᴀʟᴏ ʙᴜᴀᴛ ᴘʀᴇғɪx ᴊᴀɴɢᴀɴ sᴀᴍᴘᴇ ʟᴜᴘᴀ ᴘʀᴇғɪx ʏᴀɴɢ ʟᴜ ɢᴀɴᴛɪ ᴀᴘᴀ !!</blockquote></b>")
         except Exception as error:
             return await Tm.edit(str(error))
 
@@ -89,9 +89,9 @@ async def _(client, message):
     reason = get_arg(message)
     db_afk = {"time": time(), "reason": reason}
     msg_afk = (
-        f"<blockquote>{tion}sᴇᴅᴀɴɢ ᴀғᴋ\n{ktrng}ᴀʟᴀsᴀɴ: {reason}</blockquote>"
+        f"<blockquote><b>{tion}sedang afk\n{ktrng}alasan: {reason}</blockquote></b>"
         if reason
-        else f"{tion}sᴇᴅᴀɴɢ ᴀғᴋ"
+        else f"{tion}sedang afk"
       )
     await set_vars(client.me.id, "AFK", db_afk)
     return await message.reply(msg_afk)
@@ -110,12 +110,12 @@ async def _(client, message):
         afk_runtime = await get_time(time() - afk_time)
         rpk = f"[{message.from_user.first_name} {message.from_user.last_name or ''}](tg://user?id={message.from_user.id})"
         afk_text = (
-            f"{tion}sedang afk\n{mng}waktu: {afk_runtime}\n{ktrng}alasan: {afk_reason}"
+            f"<blockquote><b>{tion}sedang afk\n{mng}waktu: {afk_runtime}\n{ktrng}alasan: {afk_reason}</blockquote></b>"
             if afk_reason
             else f"""
-hello {rpk}
+<blockquote><b>hello {rpk}
 tuan saya sedang afk selama : {afk_runtime}
-mohon tunggu beberapa waktu
+mohon tunggu beberapa waktu</blockquote></b>
 """
         )
         return await message.reply(afk_text)
@@ -131,7 +131,7 @@ async def _(client, message):
     if vars:
         afk_time = vars.get("time")
         afk_runtime = await get_time(time() - afk_time)
-        afk_text = f"<blockquote>{tion}ᴋᴇᴍʙᴀʟɪ ᴏɴʟɪɴᴇ\n{mng}ᴀғᴋ sᴇʟᴀᴍᴀ: {afk_runtime}</blockquote>"
+        afk_text = f"<blockquote><b>{tion}kembali online\n{mng}afk selama: {afk_runtime}</blockquote></b>"
         await message.reply(afk_text)
         return await remove_vars(client.me.id, "AFK")
 

@@ -14,7 +14,20 @@ __HELP__ = """
 <blockquote>Bantuan Untuk Broaddb
 
 perintah : <code>{0}gikesdb</code> 
-    mengirim pesan siaran grup/pesan database</blockquote>
+    mengirim pesan siaran grup/pesan database
+
+perintah : <code>{0}adddb</code> 
+    menambahkan database broadcast 
+
+perintah : <code>{0}undb</code> 
+    menghapus database broadcast
+
+perintah : <code>{0}listdb</code> 
+    melihat total database broadcast
+
+perintah : <code>{0}ralldb</code> 
+    menghapus semua database broadcast</blockquote></b>
+    
 """
 
 @PY.UBOT("gikesdb")

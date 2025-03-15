@@ -21,8 +21,12 @@ async def _(client, callback_query):
         pesan = await bot.ask(
             user_id,
             f"""
-<b>💬 sɪʟᴀʜᴋᴀɴ ᴋɪʀɪᴍᴋᴀɴ ʙᴜᴋᴛɪ sᴄʀᴇᴇɴsʜᴏᴛ ᴘᴇᴍʙᴀʏᴀʀᴀɴ ᴀɴᴅᴀ: {full_name}
-ᴊɪᴋᴀ ʙᴇʟᴜᴍ ᴅɪ ᴋᴏɴғɪʀᴍᴀsɪ sɪʟᴀʜᴋᴀɴ ʜᴜʙᴜɴɢɪ @BLACKLISTYU</b></blockquote>
+<blockquote><b>ꜱɪʟᴀʜᴋᴀɴ ᴍᴇʟᴀᴋᴜᴋᴀɴ ᴘᴇᴍʙᴀʏᴀʀᴀɴ ᴛᴇʀʟᴇʙɪʜ ᴛᴀʜᴜʟᴜ ᴋᴇ Qʀɪꜱ ᴅɪ ʙᴀᴡᴀʜ ɪɴɪ</b>           
+
+qʀɪꜱ : ||https://files.catbox.moe/5hdrxz.jpg||
+𝙶𝙾𝙿𝙰𝚈 : GAADA
+𝙳𝚊𝚗𝚊 : 089528389585
+<b>💬 sɪʟᴀʜᴋᴀɴ ᴋɪʀɪᴍᴋᴀɴ ʙᴜᴋᴛɪ sᴄʀᴇᴇɴsʜᴏᴛ ᴘᴇᴍʙᴀʏᴀʀᴀɴ ᴀɴᴅᴀ: {full_name}</b></blockquote>
 """,
             timeout=300,
         )
@@ -51,14 +55,14 @@ async def _(client, callback_query):
             )
             CONFIRM_PAYMENT.remove(get.id)
             buttons = [
-                [InlineKeyboardButton("📞 ᴏᴡɴᴇʀ", url=f"tg://openmessage?user_id={OWNER_ID}")]
+                [InlineKeyboardButton("📞 ᴏᴡɴᴇʀ", url="https://t.me/ICALABAH")]
             ]
             return await bot.send_message(
                 user_id,
                 f"""
 <blockquote><b>💬 ʙᴀɪᴋ {full_name} sɪʟᴀʜᴋᴀɴ ᴅɪᴛᴜɴɢɢᴜ ᴅᴀɴ ᴊᴀɴɢᴀɴ sᴘᴀᴍ ʏᴀ</b>
 
-<b>🏦 ᴘᴇᴍʙᴀʏᴀʀᴀɴ ᴀɴᴅᴀ ᴀᴋᴀɴ ᴅɪᴋᴏɴꜰɪʀᴍᴀsɪ sᴇᴛᴇʟᴀʜ 1-12 ᴊᴀᴍ ᴋᴇʀᴊᴀ</b></blockquote>
+<b>🏦 ᴘᴇᴍʙᴀʏᴀʀᴀɴ ᴀɴᴅᴀ ᴀᴋᴀɴ ᴅɪᴋᴏɴꜰɪʀᴍᴀsɪ sᴇᴛᴇʟᴀʜ 1-2 ᴊᴀᴍ ᴋᴇʀᴊᴀ</b></blockquote>
 """,
                 reply_markup=InlineKeyboardMarkup(buttons),
             )
@@ -67,7 +71,7 @@ async def _(client, callback_query):
 @PY.CALLBACK("^(kurang|tambah)")
 async def _(client, callback_query):
     BULAN = int(callback_query.data.split()[1])
-    HARGA = 20
+    HARGA = 5
     QUERY = callback_query.data.split()[0]
     try:
         if QUERY == "kurang":
@@ -78,15 +82,15 @@ async def _(client, callback_query):
             if BULAN < 12:
                 BULAN += 1
                 TOTAL_HARGA = HARGA * BULAN
-        buttons = Button.plus_minus(BULAN, callback_query.from_user.id)
-        await callback_query.message.reply_text(
+        buttons = BTN.PLUS_MINUS(BULAN, callback_query.from_user.id)
+        await callback_query.message.edit_text(
             MSG.TEXT_PAYMENT(HARGA, TOTAL_HARGA, BULAN),
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(buttons),
         )
-        await callback_query.message.delete()
     except:
         pass
+
 
 @PY.CALLBACK("^(success|failed|home)")
 async def _(client, callback_query):

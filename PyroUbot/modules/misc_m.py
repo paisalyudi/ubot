@@ -28,15 +28,11 @@ perintah : <code>{0}qrGen</code>
     merubah qrcode text menjadi gambar
 
 perintah : <code>{0}qrRead</code>
-    merubah qrcode media menjadi text:
-
-perintah : <code>{0}tg</code>
-    mengapload media/text ke telegra.ph
+    merubah qrcode media menjadi text
 
 perintah : <code>{0}font</code>
     merubah text menjadi berbeda</blockquote>
 """
-
 
 @PY.UBOT("limit")
 @PY.TOP_CMD
@@ -67,30 +63,38 @@ async def _(client, message):
         if pjg <= 100:
             if client.me.is_premium:
                 text = f"""
-{pong} status akun premium : true {sks}
-{tion} limit check : akun anda tidak dibatasi {sks}
-{yubot} ubot : {bot.me.mention}
+<blockquote><b>{pong} sᴛᴀᴛᴜs ᴀᴋᴜɴ ᴘʀᴇᴍɪᴜᴍ : ᴛʀᴜᴇ</b>
+<b>{tion} ʟɪᴍɪᴛ ᴄʜᴇᴄᴋ : ᴀᴋᴜɴ ᴀɴᴅᴀ ᴛɪᴅᴀᴋ ᴅɪʙᴀᴛᴀsɪ</b>
+<b>{yubot} ᴜʙᴏᴛ : {bot.me.mention}</b></blockquote>
+
+<blockquote><b>USERBOT 5K/BULAN BY @Ipaaaaajaalaah_bot</b></blockquote>
 """
             else:
                 text = f"""
-status akun : beli prem dulu ya
-limit check : akun anda tidak di batasi
-ubot : {bot.me.mention}
+<blockquote><b>sᴛᴀᴛᴜs ᴀᴋᴜɴ  : ʙᴇʟɪ ᴘʀᴇᴍ ᴅᴜʟᴜ ʏᴀ</b>
+<b>ʟɪᴍɪᴛ ᴄʜᴇᴄᴋ : ᴀᴋᴜɴ ᴀɴᴅᴀ ᴛɪᴅᴀᴋ ᴅɪʙᴀᴛᴀsɪ</b>
+<b>ᴜʙᴏᴛ : {bot.me.mention}</b></blockquote>
+
+<blockquote><b>USERBOT 5K/BULAN BY @Ipaaaaajaalaah_bot</b></blockquote>
 """
             await client.send_message(message.chat.id, text)
             return await client.invoke(DeleteHistory(peer=bot_info, max_id=0, revoke=True))
         else:
             if client.me.is_premium:
                 text = f"""
-{pong} status akun premium : true
-{tion} limit check : akun anda bermasalah{ggl} 
-{yubot} ubot : {bot.me.mention}
+<blockquote><b>{pong} sᴛᴀᴛᴜs ᴀᴋᴜɴ ᴘʀᴇᴍɪᴜᴍ : ᴛʀᴜᴇ</b>
+<b>{tion} ʟɪᴍɪᴛ ᴄʜᴇᴄᴋ : ᴀᴋᴜɴ ᴀɴᴅᴀ ʙᴇʀᴍᴀsᴀʟᴀʜ</b> 
+<b>{yubot} ᴜʙᴏᴛ : {bot.me.mention}</b></blockquote>
+
+<blockquote><b>USERBOT 5K/BULAN BY @Ipaaaaajaalaah_bot</b></blockquote>
 """
             else:
                 text = f"""
-status akun : beli prem dulu ya
-limit check : akun anda bermasalah
-ubot : {bot.me.mention}
+<blockquote><b>sᴛᴀᴛᴜs ᴀᴋᴜɴ  : ʙᴇʟɪ ᴘʀᴇᴍ ᴅᴜʟᴜ ʏᴀ</b>
+<b>ʟɪᴍɪᴛ ᴄʜᴇᴄᴋ : ᴀᴋᴜɴ ᴀɴᴅᴀ ʙᴇʀᴍᴀsᴀʟᴀʜ</b>
+<b>ᴜʙᴏᴛ : {bot.me.mention}</b></blockquote>
+
+<blockquote><b>USERBOT 5K/BULAN BY @Ipaaaaajaalaah_bot</b></blockquote>
 """
             await client.send_message(message.chat.id, text)
             return await client.invoke(DeleteHistory(peer=bot_info, max_id=0, revoke=True))
@@ -235,37 +239,8 @@ async def _(client, message):
         await AM.edit("indeks daftar di luar jangkauan")
         return
     await AM.edit(f"data qrcode:\n{qr_contents}")
-
-
-@PY.UBOT("tg")
-@PY.TOP_CMD
-async def _(client, message):
-    XD = await message.reply("sedang memproses . . .")
-    if not message.reply_to_message:
-        return await XD.edit(
-            "mohon balas ke pesan, untuk mendapatkan link dari telegraph."
-        )
-    telegraph = Telegraph()
-    if message.reply_to_message.media:
-        m_d = await dl_pic(client, message.reply_to_message)
-        try:
-            media_url = upload_file(m_d)
-        except exceptions.TelegraphException as exc:
-            return await XD.edit(f"{exc}")
-        U_done = f"berhasil diupload ke <a href='https://telegra.ph/{media_url[0]}'>telegraph</a>"
-        await XD.edit(U_done)
-    elif message.reply_to_message.text:
-        page_title = f"{client.me.first_name} {client.me.last_name or ''}"
-        page_text = message.reply_to_message.text
-        page_text = page_text.replace("\n", "<br>")
-        try:
-            response = telegraph.create_page(page_title, html_content=page_text)
-        except exceptions.TelegraphException as exc:
-            return await XD.edit(f"{exc}")
-        wow_graph = f"berhasil diupload ke <a href='https://telegra.ph/{response['path']}'>telegraph</a>"
-        await XD.edit(wow_graph)
-
   
+
 @PY.UBOT("font")
 @PY.TOP_CMD
 async def _(client, message):

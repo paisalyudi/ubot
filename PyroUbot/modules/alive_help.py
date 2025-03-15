@@ -35,6 +35,7 @@ async def _(client, message):
 
 @PY.INLINE("^alive")
 async def _(client, inline_query):
+    psr = await EMO.PASIR(client)
     get_id = inline_query.query.split()
     for my in ubot._ubot:
         if int(get_id[2]) == my.me.id:
@@ -47,26 +48,26 @@ async def _(client, inline_query):
                 group = random.randrange(await my.get_dialogs_count())
             get_exp = await get_expired_date(my.me.id)
             exp = get_exp.strftime("%d-%m-%Y") if get_exp else "None"
-            if my.me.id == OWNER_ID:
-                status = "ʀɪxᴢ-ᴜʙᴏᴛ  <code>[ᴏᴡɴᴇʀ]</code>"
-            elif my.me.id in await get_list_from_vars(client.me.id, "SELER_USERS"):
-                status = "ʀɪxᴢ-ᴜʙᴏᴛ  </b> <code>[ʀᴇsᴇʟʟᴇʀ]</code>"
+            if my.me.id in await get_list_from_vars(client.me.id, "ULTRA_PREM"):
+                status = "SuperUltra"
             else:
-                status = "ʀɪxᴢ-ᴜʙᴏᴛ  </b> <code>[ᴘʀᴇᴍɪᴜᴍ]</code>"
+                status = "Premium"
             button = BTN.ALIVE(get_id)
             start = datetime.now()
             await my.invoke(Ping(ping_id=0))
             ping = (datetime.now() - start).microseconds / 1000
             uptime = await get_time((time() - start_time))
+            psr = await EMO.PASIR(client)
             msg = f"""
 <blockquote>{bot.me.mention}
-    `status: {status}`
-        `expired_on: {exp}` 
-        `dc_id: {my.me.dc_id}`
-        `ping_dc: {ping} ms`
-        `peer_users: {users} users`
-        `peer_group: {group} group`
-        `start_uptime: {uptime}`</blockquote>
+    status: {status} 
+       {psr} expired_on: {exp} 
+        dc_id: {my.me.dc_id}
+        ping_dc: {ping} ms
+        peer_users: {users} users
+        peer_group: {group} group
+        start_uptime: {uptime}</blockquote>
+        <blockquote><b>USERBOT  LITE 5K/BULAN BY @ICALABAH</b></blockquote>
 """
             await client.answer_inline_query(
                 inline_query.id,
@@ -126,7 +127,7 @@ async def _(client, callback_query):
         return await callback_query.answer("ꜱudah terupdate", True)
     else:
         await callback_query.answer("ꜱedang memproꜱeꜱ update.....", True)
-    os.execl(sys.executable, sys.executable, "-m", "PyroUbot")
+    os.execl(sys.executable, sys.executable, "-m", "ᴋɪɴɢᴢᴜʙᴏᴛ-ᴘʀᴇᴍ")
 
 
 @PY.UBOT("help")
@@ -155,7 +156,7 @@ async def user_help(client, message):
 @PY.INLINE("^user_help")
 async def user_help_inline(client, inline_query):
     SH = await ubot.get_prefix(inline_query.from_user.id)
-    msg = f"<blockquote>🪙 ᴍᴇɴᴜ ɪɴʟɪɴᴇ <a href=tg://user?id={inline_query.from_user.id}>{inline_query.from_user.first_name} {inline_query.from_user.last_name or ''}</a>\n★ ᴛᴏᴛᴀʟ ᴍᴏᴅᴜʟᴇs: {len(HELP_COMMANDS)}\n  ᴘʀᴇꜰɪx: {' '.join(SH)}</b></blockquote>"
+    msg = f"<blockquote><b>✮ ᴍᴇɴᴜ ɪɴʟɪɴᴇ <a href=tg://user?id={inline_query.from_user.id}>{inline_query.from_user.first_name} {inline_query.from_user.last_name or ''}</a>\n ≛ ᴛᴏᴛᴀʟ ᴍᴏᴅᴜʟᴇs: {len(HELP_COMMANDS)}\n 卍 ᴘʀᴇꜰɪx: {' '.join(SH)}</b></blockquote>"
     results = [InlineQueryResultArticle(
         title="Help Menu!",
         reply_markup=InlineKeyboardMarkup(paginate_modules(0, HELP_COMMANDS, "help")),
@@ -180,15 +181,15 @@ async def help_callback(client, callback_query):
     tutup_match = re.match(r"help_tutup\((.+?)\)", callback_query.data)
     back_match = re.match(r"help_back", callback_query.data)
     SH = await ubot.get_prefix(callback_query.from_user.id)
-    top_text = f"<blockquote>🪙 ᴍᴇɴᴜ ɪɴʟɪɴᴇ <a href=tg://user?id={callback_query.from_user.id}>{callback_query.from_user.first_name} {callback_query.from_user.last_name or ''}</a>\n★ ᴛᴏᴛᴀʟ ᴍᴏᴅᴜʟᴇs: {len(HELP_COMMANDS)}\n  ᴘʀᴇꜰɪx: {' '.join(SH)}</b></blockquote>"
+    top_text = f"<blockquote><b>✮ ᴍᴇɴᴜ ɪɴʟɪɴᴇ <a href=tg://user?id={callback_query.from_user.id}>{callback_query.from_user.first_name} {callback_query.from_user.last_name or ''}</a>\n ≛ ᴛᴏᴛᴀʟ ᴍᴏᴅᴜʟᴇs: {len(HELP_COMMANDS)}\n 卍 ᴘʀᴇꜰɪx: {' '.join(SH)}</b></blockquote>"
 
     if mod_match:
         module = (mod_match.group(1)).replace(" ", "_")
         text = HELP_COMMANDS[module].__HELP__.format(next((p) for p in SH))
-        button = [[InlineKeyboardButton("⊲ ʙᴀᴄᴋ", callback_data="help_back")]]
+        button = [[InlineKeyboardButton("✭ʙᴀᴄᴋ✭", callback_data="help_back")]]
         await callback_query.edit_message_text(
             text=text 
-            + '\n<blockquote><b>-- USERBOT 15K/BULAN BY @rixzbotz --</b></blockquote>',
+            + '\n<blockquote><b>USERBOT LITE 5K/BULAN BY @ICALABAH</a> </b></blockquote>',
             reply_markup=InlineKeyboardMarkup(button),
             disable_web_page_preview=True,
         )

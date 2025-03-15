@@ -25,14 +25,14 @@ perintah : <code>{0}stopg</code>
 perintah : <code>{0}bcfd</code> or <code>{0}cfd</code>
     mengirim pesan siaran secara forward
 
-perintah : <code>{0}sends</code>
+perintah : <code>{0}send</code>
     mengirim pesan ke user/group/channel
 
 perintah : <code>{0}autobc</code>
     mengirim pesan siaran secara otomatis
 
 query:
-    |on/off |text |delay |list |remove |limit</b></blockquote>
+    |on/off |text |delay |remove |limit</b></blockquote>
 """
 
 
@@ -63,26 +63,30 @@ async def limit_cmd(client, message):
         if pjg <= 100:
             if client.me.is_premium:
                 text = f"""
-<blockquote>{pong} sᴛᴀᴛᴜs ᴀᴋᴜɴ ᴘʀᴇᴍɪᴜᴍ : ᴛʀᴜᴇ {sks}
-{tion} limit check : ᴀᴋᴜɴ ᴀɴᴅᴀ ᴛɪᴅᴀᴋ ᴅɪ ʙᴀᴛᴀsɪ {sks}</blockquote>
+<blockquote>{pong} sᴛᴀᴛᴜs ᴀᴋᴜɴ ᴘʀᴇᴍɪᴜᴍ : ᴛʀᴜᴇ
+{tion} ʟɪᴍɪᴛ ᴄʜᴇᴄᴋ : ᴀᴋᴜɴ ᴀɴᴅᴀ ᴛɪᴅᴀᴋ ᴅɪʙᴀᴛᴀsɪ
+{yubot} ᴜʙᴏᴛ : {bot.me.mention}</blockquote>
 """
             else:
                 text = f"""
 <blockquote>sᴛᴀᴛᴜs ᴀᴋᴜɴ : ʙᴇʟɪ ᴘʀᴇᴍ ᴅᴜʟᴜ ʏᴀ
-ʟɪᴍɪᴛ ᴄʜᴇᴄᴋ : ᴀᴋᴜɴ ᴀɴᴅᴀ ᴛɪᴅᴀᴋ ᴅɪ ʙᴀᴛᴀsɪ</blockquote>
+ʟɪᴍɪᴛ ᴄʜᴇᴄᴋ : ᴀᴋᴜɴ ᴀɴᴅᴀ ᴛɪᴅᴀᴋ ᴅɪʙᴀᴛᴀsɪ
+ᴜʙᴏᴛ : {bot.me.mention}</blockquote>
 """
             await client.send_message(message.chat.id, text)
             return await client.invoke(DeleteHistory(peer=bot_info, max_id=0, revoke=True))
         else:
             if client.me.is_premium:
                 text = f"""
-<blockquote>{pong} sᴛᴀᴛᴜs ᴀᴋᴜɴ : ʙᴇʟɪ ᴘʀᴇᴍ ᴅᴜʟᴜ ʏᴀ
-{tion} ʟɪᴍɪᴛ ᴄʜᴇᴄᴋ : ᴀᴋᴜɴ ᴀɴᴅᴀ ʙᴇʀᴍᴀsᴀʟᴀʜ{ggl} </blockquote>
+<blockquote>{pong} sᴛᴀᴛᴜs ᴀᴋᴜɴ ᴘʀᴇᴍɪᴜᴍ : ᴛʀᴜᴇ
+{tion} ʟɪᴍɪᴛ ᴄʜᴇᴄᴋ : ᴀᴋᴜɴ ᴀɴᴅᴀ ʙᴇʀᴍᴀsᴀʟᴀʜ
+{yubot} ᴜʙᴏᴛ : {bot.me.mention}</blockquote>
 """
             else:
                 text = f"""
 <blockquote>sᴛᴀᴛᴜs ᴀᴋᴜɴ : ʙᴇʟɪ ᴘʀᴇᴍ ᴅᴜʟᴜ ʏᴀ
-ʟɪᴍɪᴛ ᴄʜᴇᴄᴋ : ᴀᴋᴜɴ ᴀɴᴅᴀ ʙᴇʀᴍᴀsᴀʟᴀʜ</blockquote>
+ʟɪᴍɪᴛ ᴄʜᴇᴄᴋ : ᴀᴋᴜɴ ᴀɴᴅᴀ ʙᴇʀᴍᴀsᴀʟᴀʜ
+ᴜʙᴏᴛ : {bot.me.mention}</blockquote>
 """
             await client.send_message(message.chat.id, text)
             return await client.invoke(DeleteHistory(peer=bot_info, max_id=0, revoke=True))
@@ -108,7 +112,7 @@ async def gcast_handler(client, message):
 
     if command not in ["group", "users", "all"] or not text:
         gcast_progress.remove(client.me.id)
-        return await gcs.edit(f"{ggl}{message.text.split()[0]} ᴛʏᴘᴇ [ʀᴇᴘʟʏ]")
+        return await gcs.edit(f"<blockquote><code>{message.text.split()[0]}</code> <b>[ᴛʏᴘᴇ] [ᴛᴇxᴛ/ʀᴇᴘʟʏ]</b> {ggl}</blockquote>")
     chats = await get_data_id(client, command)
     blacklist = await get_list_from_vars(client.me.id, "BL_ID")
 
@@ -125,8 +129,7 @@ async def gcast_handler(client, message):
             if message.reply_to_message:
                 await text.copy(chat_id)
             else:
-                await client.send_message(chat_id, text
-                )
+                await client.send_message(chat_id, text)
             done += 1
         except FloodWait as e:
             await asyncio.sleep(e.value)
@@ -134,8 +137,7 @@ async def gcast_handler(client, message):
                 if message.reply_to_message:
                     await text.copy(chat_id)
                 else:
-                    await client.send_message(chat_id, text
-                    )
+                    await client.send_message(chat_id, text)
                 done += 1
             except (Exception, ChannelPrivate):
                 failed += 1
@@ -149,6 +151,7 @@ async def gcast_handler(client, message):
 <blockquote><b>{sks}ʙᴇʀʜᴀsɪʟ : {done} ᴄʜᴀᴛ</b>
 <b>{ggl}ɢᴀɢᴀʟ : {failed} ᴄʜᴀᴛ</b>
 <b>{ktrng}ᴛʏᴘᴇ :</b> <code>{command}</code></blockquote>
+
 """
     return await message.reply(_gcs)
 
@@ -160,7 +163,7 @@ async def stopg_handler(client, message):
     global gcast_progress
     if client.me.id in gcast_progress:
         gcast_progress.remove(client.me.id)
-        return await message.reply(f"<blockquote><b>ɢᴄᴀsᴛ ʙᴇʀʜᴀsɪʟ ᴅɪ ᴄᴀɴᴄᴇʟ</b></blockquote>")
+        return await message.reply(f"<blockquote><b>ɢᴄᴀsᴛ ʙᴇʀʜᴀsɪʟ ᴅɪ ᴄᴀɴᴄᴇʟ</b> {sks}</blockquote>")
     else:
         return await message.reply(f"<blockquote><b>{ggl}ᴛɪᴅᴀᴋ ᴀᴅᴀ ɢᴄᴀsᴛ !!!</b></blockquote>")
 
@@ -172,16 +175,16 @@ async def _(client, message):
     ggl = await EMO.GAGAL(client)
     bcs = await EMO.BROADCAST(client)
     
-    _msg = f"<b>{prs}ᴍᴇᴍᴘʀᴏsᴇs...</b>"
+    _msg = f"{prs}proceꜱꜱing..."
     gcs = await message.reply(_msg)
 
     command, text = extract_type_and_msg(message)
     
     if command not in ["group", "users", "all"] or not text:
-        return await gcs.edit(f"{ggl}{message.text.split()[0]} ᴛʏᴘᴇ [ʀᴇᴘʟʏ]")
+        return await gcs.edit(f"{ggl}{message.text.split()[0]} type [reply]")
 
     if not message.reply_to_message:
-        return await gcs.edit(f"{ggl}{message.text.split()[0]} ᴛʏᴘᴇ [ʀᴇᴘʟʏ]")
+        return await gcs.edit(f"{ggl}{message.text.split()[0]} type [reply]")
 
     chats = await get_data_id(client, command)
     blacklist = await get_list_from_vars(client.me.id, "BL_ID")
@@ -211,17 +214,18 @@ async def _(client, message):
 
     await gcs.delete()
     _gcs = f"""
-<blockquote><b>{bcs}ʙʀᴏᴀᴅᴄᴀꜱᴛ ғᴏʀᴅᴡᴀʀᴅ ᴅᴏɴᴇ</blockquote>
-<blockquote>{brhsl}ʙᴇʀʜᴀsɪʟ : {done} ᴄʜᴀᴛ
-{ggl}ɢᴀɢᴀʟ : {failed} ᴄʜᴀᴛ</blockquote></b>
+<blockquote><b>{bcs}ʙʀᴏᴀᴅᴄᴀsᴛ ғᴏʀᴡᴀʀᴅ ᴅᴏɴᴇ</blockquote></b>
+<blockquote><b>{brhsl} sᴜᴄᴄᴇs {done} ɢʀᴏᴜᴘ</b>
+<b>{ggl} ғᴀɪʟᴇᴅ {failed} ɢʀᴏᴜᴘ</blockquote></b>
+
 """
     return await message.reply(_gcs)
 
 
-@PY.BOT("broadcast")
+@PY.BOT("bcast")
 @PY.ADMIN
 async def _(client, message):
-    msg = await message.reply("proceꜱꜱing...", quote=True)
+    msg = await message.reply("<blockquote><b>okee proses Boy...</blockquote></b>\n\n<blockquote><b>mohon bersabar untuk menunggu proses broadcast sampai selesai</blockquote></b>", quote=True)
 
     send = get_message(message)
     if not send:
@@ -246,7 +250,7 @@ async def _(client, message):
         except Exception:
             pass
 
-    return await msg.edit(f"Pesan broadcast berhasil terkirim ke {done} user")
+    return await msg.edit(f"<blockquote><b>Pesan broadcast berhasil terkirim ke {done} user</blockquote></b>\n\n<blockquote><b>`USERBOT 5K/BULAN BY` @Ipaaaaajaalaah_bot</b></blockquote>")
 
 
 @PY.UBOT("addbl")
@@ -255,6 +259,7 @@ async def _(client, message):
 async def _(client, message):
     prs = await EMO.PROSES(client)
     grp = await EMO.BL_GROUP(client)
+    ktrn = await EMO.BL_KETERANGAN(client)
     _msg = f"{prs}proceꜱꜱing..."
 
     msg = await message.reply(_msg)
@@ -264,12 +269,17 @@ async def _(client, message):
 
         if chat_id in blacklist:
             txt = f"""
-<blockquote><b>{grp} group: {message.chat.title}  ꜱudah ada dalam blackliꜱt broadcaꜱt</b></blockquote>
+<blockquote><b>{grp} ɢʀᴏᴜᴘ: {message.chat.title}</blockquote></b>
+<blockquote><b>{ktrn} ᴋᴇᴛ: sᴜᴅᴀʜ ᴀᴅᴀ ᴅᴀʟᴀᴍ ʟɪsᴛ ᴊᴇᴍʙᴏᴛ</blockquote></b>
+
+<blockquote><b>USERBOT 5K/BULAN BY @Ipaaaaajaalaah_bot</b></blockquote>
 """
         else:
             await add_to_vars(client.me.id, "BL_ID", chat_id)
             txt = f"""
-<blockquote><b>{grp} group: {message.chat.title}  berhaꜱil di tambahkan ke blackliꜱt broadcaꜱt</b></blockquote>
+<blockquote><b>{grp} ɢʀᴏᴜᴘ: {message.chat.title}</blockquote></b>\n<blockquote><b>{ktrn} ᴋᴇᴛ: ʙᴇʀʜᴀsɪʟ ᴅɪ ᴛᴀᴍʙᴀʜᴋᴀɴ ᴋᴇ ᴅᴀʟᴀᴍ ʟɪsᴛ ᴊᴇᴍʙᴏᴛ</blockquote></b>
+
+<blockquote><b>USERBOT 5K/BULAN BY @Ipaaaaajaalaah_bot</b></blockquote>
 """
 
         return await msg.edit(txt)
@@ -283,6 +293,7 @@ async def _(client, message):
 async def _(client, message):
     prs = await EMO.PROSES(client)
     grp = await EMO.BL_GROUP(client)
+    ktrn = await EMO.BL_KETERANGAN(client)
     _msg = f"{prs}proceꜱꜱing..."
 
     msg = await message.reply(_msg)
@@ -292,12 +303,18 @@ async def _(client, message):
 
         if chat_id not in blacklist:
             response = f"""
-<blockquote><b>{grp} group: {message.chat.title}  tidak ada dalam blackliꜱt broadcaꜱt</b></blockquote>
+<blockquote><b>{grp} ɢʀᴏᴜᴘ: {message.chat.title}</blockquote></b>
+<blockquote><b>{ktrn} ᴋᴇᴛ: ᴛɪᴅᴀᴋ ᴀᴅᴀ ᴅᴀʟᴀᴍ ʟɪsᴛ ᴊᴇᴍʙᴏᴛ</b></blockquote>
+
+<blockquote><b>USERBOT 5K/BULAN BY @Ipaaaaajaalaah_bot</b></blockquote>
 """
         else:
             await remove_from_vars(client.me.id, "BL_ID", chat_id)
             response = f"""
-<blockquote><b>{grp} group: {message.chat.title}  berhaꜱil di hapuꜱ dalam blackliꜱt broadcaꜱt</b></blockquote>
+<blockquote><b>{grp} ɢʀᴏᴜᴘ: {message.chat.title}</blockquote ></b>
+<blockquote><b>{ktrn} ᴋᴇᴛ: ʙᴇʀʜᴀsɪʟ ᴅɪ ʜᴀᴘᴜs ᴋᴇ ᴅᴀʟᴀᴍ ʟɪsᴛ ᴊᴇᴍʙᴏᴛ</blockquote></b>
+
+<blockquote><b>USERBOT 5k/BULAN BY @Ipaaaaajaalaah_bot</b></blockquote>
 """
 
         return await msg.edit(response)
@@ -350,7 +367,7 @@ async def _(client, message):
     await msg.edit(f"{brhsl}ꜱemua blackliꜱt broadcaꜱt berhaꜱil di hapuꜱ")
 
 
-@PY.UBOT("sends")
+@PY.UBOT("send")
 @PY.TOP_CMD
 async def _(client, message):
     if message.reply_to_message:
@@ -375,7 +392,7 @@ async def _(client, message):
                 return await message.reply(f"{t}")
     else:
         if len(message.command) < 3:
-            return await message.reply("contoh : .send halo")
+            return await message.reply("Ketik yang bener kntl")
         chat_id, chat_text = message.text.split(None, 2)[1:]
         try:
             if "_" in chat_id:
@@ -450,11 +467,11 @@ async def _(client, message):
                     ):
                         try:
                             await asyncio.sleep(1)
-                            await client.send_message(dialog.chat.id, f"{txt}")
+                            await client.send_message(dialog.chat.id, f"{txt} ")
                             group += 1
                         except FloodWait as e:
                             await asyncio.sleep(e.value)
-                            await client.send_message(dialog.chat.id, f"{txt}")
+                            await client.send_message(dialog.chat.id, f"{txt} ")
                             group += 1
                         except Exception:
                             pass
@@ -464,10 +481,10 @@ async def _(client, message):
 
                 done += 1
                 await msg.reply(f"""
-<blockquote>{bcs}autobc done
+{bcs}auto_gcaꜱt done
 putaran {done}
 {brhsl}ꜱucceꜱ {group} group
-{mng}wait {delay} minuteꜱ</blockquote>
+{mng}wait {delay} minuteꜱ
 """,
                     quote=True,
                 )
@@ -557,3 +574,20 @@ async def add_auto_text(client, text):
     auto_text = await get_vars(client.me.id, "AUTO_TEXT") or []
     auto_text.append(text)
     await set_vars(client.me.id, "AUTO_TEXT", auto_text)
+
+@PY.BOT("bcubot")
+@PY.ADMIN
+async def broadcast_bot(client, message):
+    msg = await message.reply("<b>sᴇᴅᴀɴɢ ᴅɪᴘʀᴏsᴇs ᴛᴜɴɢɢᴜ sᴇʙᴇɴᴛᴀʀ</b>", quote=True)
+    done = 0
+    if not message.reply_to_message:
+        return await msg.edit("<b>ᴍᴏʜᴏɴ ʙᴀʟᴀs ᴘᴇsᴀɴ</b>")
+    for x in ubot._ubot:
+        try:
+            await x.unblock_user(bot.me.username)
+            await message.reply_to_message.forward(x.me.id)
+            done += 1
+        except Exception:
+            pass
+    return await msg.edit(f"✅ ʙᴇʀʜᴀsɪʟ ᴍᴇɴɢɪʀɪᴍ ᴘᴇsᴀɴ ᴋᴇ {done} ᴜʙᴏᴛ")
+    
