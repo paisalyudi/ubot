@@ -21,6 +21,6 @@ RMBG_API = os.getenv("RMBG_API", "a6qxsmMJ3CsNo7HyxuKGsP1o")
 
 MONGO_URL = os.getenv("MONGO_URL", "mongodb+srv://ml9079716:48gxGsQhTHWumLI15@cluster0.6e1q9.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 
-LOGS_MAKER_UBOT = int(os.getenv("LOGS_MAKER_UBOT"))
+LOGS_MAKER_UBOT = int(os.getenv(" -1002458741546"))
 
 USER_GROUP = os.getenv("USER_GROUP", "@roompublicblackderry")
